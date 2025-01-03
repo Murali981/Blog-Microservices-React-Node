@@ -12,6 +12,7 @@ app.post("/events", (req, res) => {
   axios.post("http://localhost:4000/events", event); // on 4000 port our posts service is running
   axios.post("http://localhost:4001/events", event); // on 4001 port our comments service is running
   axios.post("http://localhost:4002/events", event); // on 4002 port our query service is running
+  axios.post("http://localhost:4003/events", event); // on 4003 port our moderation service is running
 
   res.send({ status: "OK" });
 });

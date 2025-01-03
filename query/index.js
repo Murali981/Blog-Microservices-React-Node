@@ -38,10 +38,11 @@ app.post("/events", (req, res) => {
   }
 
   if (type === "CommentCreated") {
-    const { id, content, postId } = data;
+    const { id, content, postId, status } = data;
 
     const post = posts[postId];
-    post.comments?.push({ id, content }); // The newly pushed comment will have an ID and content
+    post.comments?.push({ id, content, status }); // The newly pushed comment will have an ID and content and status , Here we are adding the
+    // array of comments for a particular post
   }
 
   console.log(posts);
