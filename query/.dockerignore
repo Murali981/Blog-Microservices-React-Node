@@ -1,0 +1,3 @@
+node_modules
+# This .dockerignore file makes sure that during the image building process we donot attempt to copy over the node_modules directory because 
+# the docker image is going to install all the relevant dependencies.
