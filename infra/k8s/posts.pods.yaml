@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod # We want to create a pod
+metadata:
+  name: posts # Pod name is going to be posts
+spec:
+  containers: # Inside the Pod posts we are going to have one container whose name is also posts
+    - name: posts
+      image: murali981/posts:0.0.1 # We are going to build the container using the image name and tag
