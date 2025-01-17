@@ -16,4 +16,7 @@ spec:
     spec:
       containers: # Here the containers is an array
         - name: posts # The name of the container is posts
-          image: murali981/posts:0.0.1 # The image of the container is murali981/posts which it has to run
+          image: muraliju981108/posts
+          # image: murali981/posts:0.0.5 # The image of the container is murali981/posts which it has to run
+          # The image of the container is murali981/posts which it has to run and by default
+          # it will use the latest tag (or) latest image
