@@ -20,3 +20,16 @@ spec:
           # image: murali981/posts:0.0.5 # The image of the container is murali981/posts which it has to run
           # The image of the container is murali981/posts which it has to run and by default
           # it will use the latest tag (or) latest image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip-srv
+spec:
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      port: 4000 # Here the reason for writing the port as 4000 because our posts is running on 4000 port
+      targetPort: 4000 # Here the reason for writing the port as 4000 because our posts is running on 4000 port
