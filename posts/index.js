@@ -29,8 +29,18 @@ app.post("/posts", async (req, res) => {
     title,
   }; // Here we are adding a new post to our post collection.
 
-  await axios.post("http://localhost:4005/events", {
-    // This is an asynchronous operation making the network request
+  // await axios.post("http://localhost:4005/events", {
+  //   // This is an asynchronous operation making the network request
+  //   type: "PostCreated",
+  //   data: {
+  //     id,
+  //     title,
+  //   },
+  // }); // In the port 4005 only our event-bus service is running
+
+  await axios.post("http://event-bus-srv:4005/events", {
+    // This is an asynchronous operation making the network request, This event-bus-srv is the name of the event-bus service inside the
+    // kubernetes cluster
     type: "PostCreated",
     data: {
       id,

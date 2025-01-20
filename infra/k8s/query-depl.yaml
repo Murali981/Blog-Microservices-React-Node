@@ -1,0 +1,36 @@
+# This is a deployement file
+apiVersion: apps/v1 # Deployment is inside this object apps/v1
+kind: Deployment
+metadata:
+  name: query-depl # Name of the deployment
+spec:
+  replicas: 1 # Number of replicas (replicas is the number of pods that we want to create running some particular image)
+  selector: # The selector right here is saying that, take a look at all the different pods that are created with the name
+    #  label app: posts
+    matchLabels:
+      app: query # Match the label app: event-bus (This we refer as a label which is like a (key, value) pair)
+  template: # This template is where we specify the exact configuration of a pod that we want this deploymnent to create
+    metadata:
+      labels: # We want the pod to have the label which is app: event-bus (Basically the template and the selector sections will work together)
+        app: query
+    spec:
+      containers: # Here the containers is an array
+        - name: query # The name of the container is event-bus
+          image: muraliju981108/query
+          # image: muraliju981108/event-bus:0.0.5 # The image of the container is muraliju981108/event-bus which it has to run
+          # The image of the container is muraliju981108/event-bus which it has to run and by default
+          # it will use the latest tag (or) latest image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-srv
+spec:
+  selector:
+    app: query
+  type: ClusterIP
+  ports:
+    - name: query
+      protocol: TCP
+      port: 4002 # Here the reason for writing the port as 4002 because our query is running on 4002 (You can check in query/index.js file)
+      targetPort: 4002

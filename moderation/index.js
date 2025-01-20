@@ -20,7 +20,18 @@ app.post("/events", async (req, res) => {
     // approve the comment. After this we have to emit the "CommentModerated" event to the event bus by making a POST request and also
     // include the comment with newly updated status.
 
-    await axios.post("http://localhost:4005/events", {
+    // await axios.post("http://localhost:4005/events", {
+    //   // our event bus is running on 4005 port
+    //   type: "CommentModerated",
+    //   data: {
+    //     id: data.id,
+    //     postId: data.postId,
+    //     status,
+    //     content: data.content,
+    //   },
+    // });
+
+    await axios.post("http://event-bus-srv:4005/events", {
       // our event bus is running on 4005 port
       type: "CommentModerated",
       data: {

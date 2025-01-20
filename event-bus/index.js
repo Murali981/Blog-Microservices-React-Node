@@ -13,18 +13,36 @@ app.post("/events", (req, res) => {
 
   events.push(event); // The most recently occured event will be at the end of the events array
 
-  axios.post("http://localhost:4000/events", event).catch((err) => {
+  axios.post("http://posts-clusterip-srv:4000/events", event).catch((err) => {
     console.log(err.message);
-  }); // on 4000 port our posts service is running
-  axios.post("http://localhost:4001/events", event).catch((err) => {
+  }); // on 4000 port our posts service is running, This posts-clusterip-srv is the name of the posts service inside the
+  // kubernetes cluster
+
+  axios.post("http://comments-srv:4001/events", event).catch((err) => {
     console.log(err.message);
-  }); // on 4001 port our comments service is running
-  axios.post("http://localhost:4002/events", event).catch((err) => {
+  }); // on 4001 port our comments service is running, This comments-srv is the name of the comments service inside the
+  // kubernetes cluster
+  axios.post("http://query-srv:4002/events", event).catch((err) => {
     console.log(err.message);
-  }); // on 4002 port our query service is running
-  axios.post("http://localhost:4003/events", event).catch((err) => {
+  }); // on 4002 port our query service is running, This query-srv is the name of the query service inside the
+  // kubernetes cluster
+  axios.post("http://moderation-srv:4003/events", event).catch((err) => {
     console.log(err.message);
-  }); // on 4003 port our moderation service is running
+  }); // on 4003 port our moderation service is running, This moderation-srv is the name of the moderation service inside the
+  // kubernetes cluster
+
+  // axios.post("http://localhost:4000/events", event).catch((err) => {
+  //   console.log(err.message);
+  // }); // on 4000 port our posts service is running
+  // axios.post("http://localhost:4001/events", event).catch((err) => {
+  //   console.log(err.message);
+  // }); // on 4001 port our comments service is running
+  // axios.post("http://localhost:4002/events", event).catch((err) => {
+  //   console.log(err.message);
+  // }); // on 4002 port our query service is running
+  // axios.post("http://localhost:4003/events", event).catch((err) => {
+  //   console.log(err.message);
+  // }); // on 4003 port our moderation service is running
 
   res.send({ status: "OK" });
 });

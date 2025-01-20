@@ -78,8 +78,13 @@ app.listen(4002, async () => {
   // over to our event bus and try to get the list of all the different events that have been emitted till this point of time.
 
   try {
+    // const res = await axios
+    //   .get("http://localhost:4005/events")
+    //   .catch((err) => {}); // This is going to return all the events that are occured during this point of
+    // // time
+
     const res = await axios
-      .get("http://localhost:4005/events")
+      .get("http://event-bus-srv:4005/events")
       .catch((err) => {}); // This is going to return all the events that are occured during this point of
     // time
 

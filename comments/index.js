@@ -31,7 +31,21 @@ app.post("/posts/:id/comments", async (req, res) => {
 
   commentsByPostId[req.params.id] = comments;
 
-  await axios.post("http://localhost:4005/events", {
+  // await axios.post("http://localhost:4005/events", {
+  //   type: "CommentCreated",
+  //   data: {
+  //     id: commentId,
+  //     content,
+  //     postId: req.params.id,
+  //     status: "pending",
+  //   },
+  // }); // Here we are creating the "CommentCreated" event, In this "CommentCreated" event we are also sending the status which is
+  // // by default to "pending" state, So we have to add the status property to the data object. Now this event "CommentCreated" event will
+  // // go to the query service and then the query service will understand that a comment was created and it's status is pending.
+
+  await axios.post("http://event-bus-srv:4005/events", {
+    // Here we are updating the url to the event bus service which is
+    // inside the kubernetes cluster
     type: "CommentCreated",
     data: {
       id: commentId,
@@ -70,7 +84,19 @@ app.post("/events", async (req, res) => {
     // Now we have to emit the "CommentUpdated" event to the event bus by making a POST request and also include the comment with the
     // newly updated status.  Here we are telling to all other services such as Post service, Comment service, Query service and Moderation
     // service that a comment was updated.
-    await axios.post("http://localhost:4005/events", {
+    // await axios.post("http://localhost:4005/events", {
+    //   type: "CommentUpdated",
+    //   data: {
+    //     id,
+    //     status, // The updated status
+    //     postId, // The postId of this comment is associated with
+    //     content,
+    //   },
+    // });
+
+    await axios.post("http://event-bus-srv:4005/events", {
+      //  // Here we are updating the url to the event bus service which is
+      // inside the kubernetes cluster
       type: "CommentUpdated",
       data: {
         id,
