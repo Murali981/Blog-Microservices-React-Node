@@ -10,7 +10,7 @@ spec:
   rules: # rules is going to be an array
     - host: posts.com # Ingress-Nginx is setup assuming that you might be hosting many different applications(apps) at different domains. So
       # the ingress controller is going to be able to understand that we are trying to host our posts app at posts.com domain
-    - http:
+      http:
         paths:
           - path: /posts
             pathType: Prefix
