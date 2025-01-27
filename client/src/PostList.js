@@ -10,10 +10,16 @@ export default () => {
   const [posts, setPosts] = useState({});
 
   const fetchPosts = async () => {
-    const res = await axios.get("http://localhost:4002/posts"); // A quick remainder, Anytime when we make a request to the axios,
+    // const res = await axios.get("http://localhost:4002/posts"); // A quick remainder, Anytime when we make a request to the axios,
     // we will get back a response object and the actual data is nested inside there on the data property. On port 4002 is where our
     // query service is running
     // console.log(res.data);
+
+    const res = await axios.get("http://posts.com/posts"); // A quick remainder, Anytime when we make a request to the axios,
+    // we will get back a response object and the actual data is nested inside there on the data property. On port 4002 is where our
+    // query service is running
+    // console.log(res.data);
+
     setPosts(res.data);
   };
 

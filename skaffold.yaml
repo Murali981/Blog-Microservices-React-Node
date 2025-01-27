@@ -1,0 +1,71 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: muraliju981108/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: muraliju981108/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: muraliju981108/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: muraliju981108/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: muraliju981108/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: muraliju981108/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+# The above one is telling skaffold that there is a collection of different config files intended for kubernetes inside the ./infra/k8s folder
+# So by adding the above manifests line you are telling skaffold that we wanted to watch all the different yaml files inside the
+# ./infra/k8s folder. If we make any changes to the any of the YAML files inside the ./infra/k8s folder, skaffold will automatically
+# detect the changes and re-deploy the changes to the kubernetes cluster. Skaffold is also going to delete all the config (or) all the
+# objects associated with these config files when we have stopped the scaffold as well.
+
+# By default whenever skaffold makes a change to one of our images (or) rebuilds an image, It is going to try to push it to the docker
+# hub => This is not actually required when we are using skaffold, So we are disabling this behaviuour by setting the push to false.
+
+# In the above artifacts section in the skaffold.yaml file is going to tell something inside of our project that it needs to mantain. We are
+# essentially saying that there is going to be some pod that is running code out of the client directory inside of our project. Whenever
+# something changes inside the client directory, skaffold will try to take those changes and somehow update our pod. There are two ways
+# in which skaffold is trying to update our pod. If we make to change something inside the javascript file which is inside the src folder
+# then skaffold is going to take that change and throw directly into the pod. So the pod will always have the latest code inside of it

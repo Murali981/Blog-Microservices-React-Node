@@ -6,16 +6,38 @@ metadata:
     # routing rules to the ingress controller. The ingress controller is going to scan all the different objects (or) all the different
     # config files that we are throwing into our kubernetes cluster and it is going to try to find out the exact annotation as below
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   rules: # rules is going to be an array
     - host: posts.com # Ingress-Nginx is setup assuming that you might be hosting many different applications(apps) at different domains. So
       # the ingress controller is going to be able to understand that we are trying to host our posts app at posts.com domain
       http:
         paths:
-          - path: /posts
+          - path: /posts/create
             pathType: Prefix
             backend:
               service:
                 name: posts-clusterip-srv
                 port:
                   number: 4000
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 4002
+          - path: /posts/?(.*)/comments
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-srv
+                port:
+                  number: 4001
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000

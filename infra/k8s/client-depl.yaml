@@ -1,0 +1,36 @@
+# This is a deployement file
+apiVersion: apps/v1 # Deployment is inside this object apps/v1
+kind: Deployment
+metadata:
+  name: client-depl # Name of the deployment
+spec:
+  replicas: 1 # Number of replicas (replicas is the number of pods that we want to create running some particular image)
+  selector: # The selector right here is saying that, take a look at all the different pods that are created with the name
+    #  label app: posts
+    matchLabels:
+      app: client # Match the label app: event-bus (This we refer as a label which is like a (key, value) pair)
+  template: # This template is where we specify the exact configuration of a pod that we want this deploymnent to create
+    metadata:
+      labels: # We want the pod to have the label which is app: event-bus (Basically the template and the selector sections will work together)
+        app: client
+    spec:
+      containers: # Here the containers is an array
+        - name: client # The name of the container is event-bus
+          image: muraliju981108/client
+          # image: muraliju981108/event-bus:0.0.5 # The image of the container is muraliju981108/event-bus which it has to run
+          # The image of the container is muraliju981108/event-bus which it has to run and by default
+          # it will use the latest tag (or) latest image
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client
+  type: ClusterIP
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000 # Here the reason for writing the port as 3000 because our create-react-app is running on port 3000 (You can check in client/src/index.js file)
+      targetPort: 3000
