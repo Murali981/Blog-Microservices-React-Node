@@ -58,6 +58,6 @@ app.post("/events", (req, res) => {
 }); // This end point is going to receive any event that is coming from the event bus
 
 app.listen(4000, () => {
-  console.log("version 55"); // Added this line to update the deployement of kubernetes cluster
+  console.log("version 1000"); // Added this line to update the deployement of kubernetes cluster
   console.log("Listening on port 4000");
 });
